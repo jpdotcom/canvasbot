@@ -1,0 +1,70 @@
+📝 CanvasBot TODOs
+Week 2 — Backend Expansion & Assignments
+Database & Schemas
+
+ Add Assignment table in MySQL / SQLAlchemy ORM
+
+Fields: id, user_id (FK), canvas_id, name, due_date, course_id
+
+ Add Pydantic schemas:
+
+AssignmentCreate
+
+AssignmentResponse
+
+CRUD Layer
+
+ Add create_assignment(db, assignment) function
+
+ Add get_assignments(db, user_id) function
+
+ Test CRUD functions manually
+
+Routers
+
+ Create routers/assignments.py
+
+ Add endpoints:
+
+POST /assignments/ → create assignment
+
+GET /assignments/{user_id} → fetch assignments
+
+ Connect router to main.py
+
+Canvas API Integration
+
+ Write helper function to fetch user courses and assignments from Canvas API
+
+ Insert fetched assignments into MySQL via CRUD
+
+Testing
+
+ Create a user, fetch assignments from Canvas, store in DB
+
+ Test GET /assignments/{user_id} to ensure JSON is returned correctly
+
+Week 3 — Canvas File Integration & LLM Prep
+Database
+
+ Add CanvasFile table → id, user_id (FK), course_id, filename, url, retrieved_at
+
+Routers
+
+ Create routers/files.py
+
+ Add endpoint:
+
+GET /files/{user_id} → list Canvas files for user
+
+Canvas API
+
+ Fetch files from Canvas courses: /api/v1/courses/{course_id}/files
+
+ Store file metadata (filename, course, URL) in database
+
+LLM Prep
+
+ Store URLs and metadata so LLM can reference later
+
+ (Optional later) download content and create embeddings for QA
