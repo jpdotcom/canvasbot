@@ -34,9 +34,9 @@ def get_assignment(course_id,token):
 
     return resp.json()
 
-def sync_assignments(user_id,db,token):
+def sync_assignments(user_id,db):
 
-    
+    token=crud.get_user_token(db=db,user_id=user_id)
     all_courses = get_courses(token=token);
     assignments=[]
     print("DEBUG: get_courses() returned:")

@@ -4,8 +4,9 @@ import db
 import schemas
 import crud 
 import canvas_api
+from dotenv import load_dotenv 
+import os 
 router = APIRouter(prefix='/assignments', tags=["assignments"]) 
-TOKEN = "5590~6tU2ynHJGBhXynfDYFGAKfznJFYrQU2tPJUr3m273cvx8NAz88CQEnAFG6DFER9D"
 
 
 @router.post("/",response_model=schemas.AssignmentResponse)
@@ -22,5 +23,5 @@ def get_assignment(assignment_id: int, database: Session = Depends(db.get_db)):
 
 @router.post("/sync/{user_id}")
 def sync(user_id:int,database:Session=Depends(db.get_db)):
-    canvas_api.sync_assignments(user_id=user_id,db=database,token=TOKEN);
+    canvas_api.sync_assignments(user_id=user_id,db=database);
     return;

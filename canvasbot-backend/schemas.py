@@ -6,7 +6,7 @@ class UserBase(BaseModel):
 
 class UserCreate(UserBase):
     name:str 
-
+    canvas_token:str
 
 class UserResponse(UserBase):
     id: int

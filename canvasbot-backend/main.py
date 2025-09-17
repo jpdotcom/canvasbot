@@ -6,8 +6,7 @@ import os
 load_dotenv()
 CANVAS_BASE_URL = "https://canvas.case.edu/api/v1"
 DATABASE_URL=os.getenv("DATABASE_URL")
-TOKEN=os.getenv("TOKEN")
-headers = {"Authorization": f"Bearer {TOKEN}"}
+
 
 app=FastAPI()
 app.include_router(users.router);
