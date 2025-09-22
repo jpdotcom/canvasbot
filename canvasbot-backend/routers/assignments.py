@@ -25,3 +25,5 @@ def get_assignment(assignment_id: int, database: Session = Depends(db.get_db)):
 def sync(user_id:int,database:Session=Depends(db.get_db)):
     canvas_api.sync_assignments(user_id=user_id,db=database);
     return;
+
+

@@ -3,7 +3,7 @@ import models,schemas
 
 def create_user(db:Session, user:schemas.UserCreate):
 
-    db_user = models.User(name=user.name,email=user.email,canvas_token=user.canvas_token)
+    db_user = models.User(name=user.name,email=user.email,canvas_token=user.canvas_token,password=user.password)
 
     db.add(db_user);
     db.commit() 
@@ -11,6 +11,14 @@ def create_user(db:Session, user:schemas.UserCreate):
     return db_user;
 def get_user(db:Session,user_id:int):
     return db.query(models.User).filter(models.User.id == user_id).first();
+
+def get_user_by_login(user:schemas.UserCreate, db:Session):
+    
+    found_user = db.query(models.User).filter(models.User.email == user.email).first();
+    if (found_user and user.password == found_user.password):
+        return True;
+    else:
+        return False;
 
 def create_assignment(assignment:schemas.AssignmentCreate,db:Session):
 

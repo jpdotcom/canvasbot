@@ -3,9 +3,10 @@ from datetime import datetime
 
 class UserBase(BaseModel):
     email:str 
-
+    password:str
 class UserCreate(UserBase):
     name:str 
+    
     canvas_token:str
 
 class UserResponse(UserBase):
