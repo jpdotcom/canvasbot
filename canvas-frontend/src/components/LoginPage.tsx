@@ -4,7 +4,6 @@ import { useState, FormEvent } from 'react';
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [apiToken, setApiToken] = useState('');
   const [error, setError] = useState(false);
   const PORT=8000
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -18,13 +17,17 @@ export default function LoginPage() {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              email,
-              password,
-              canvas_token: apiToken,
+              email: email,
+              password: password,
+           
             }),
           });
+        console.log(response.ok);
       if (response.ok) {
-        window.location.href = '/dashboard';
+       setEmail("")
+       setPassword("");
+       window.location.href = '/dashboard';
+      
       } else {
         setError(true);
       }
@@ -49,7 +52,8 @@ export default function LoginPage() {
               className="form-control"
               id="email"
               required
-              value={email}
+              value = {email}
+         
               onChange={e => setEmail(e.target.value)}
             />
           </div>
@@ -66,17 +70,7 @@ export default function LoginPage() {
             />
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="api-token" className="form-label">Canvas API Token</label>
-            <input
-              type="password"
-              className="form-control"
-              id="api-token"
-              required
-              value={apiToken}
-              onChange={e => setApiToken(e.target.value)}
-            />
-          </div>
+         
 
           {error && (
             <div className="alert alert-danger py-2" role="alert">
@@ -88,7 +82,7 @@ export default function LoginPage() {
         </form>
 
         <div className="text-center mt-3">
-          <a href="#" className="text-primary">Don't have an account? Sign up</a>
+          <a href="#" className="text-primary" onClick={() => {window.location.href="/SignUp"}}>Don't have an account? Sign up</a>
         </div>
       </div>
     </div>
