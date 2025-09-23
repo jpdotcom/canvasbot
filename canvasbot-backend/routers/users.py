@@ -19,7 +19,6 @@ def read_user(user_id:int, database: Session = Depends(db.get_db)):
 
 @router.post("/validate")
 def validate_user(user:schemas.UserBase, database:Session = Depends(db.get_db)):
-    print("HELLO")
     user = crud.get_user_by_login(user,db=database);
     if (user):
         return "200"
