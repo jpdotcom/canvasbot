@@ -2,6 +2,10 @@ from sqlalchemy.orm import Session
 import models,schemas 
 
 def create_user(db:Session, user:schemas.UserCreate):
+    # check if user with email already exists
+    existing_user = db.query(models.User).filter(models.User.email == user.email).first();
+    if (existing_user):
+        return None;
 
     db_user = models.User(name=user.name,email=user.email,canvas_token=user.canvas_token,password=user.password)
 
@@ -12,13 +16,16 @@ def create_user(db:Session, user:schemas.UserCreate):
 def get_user(db:Session,user_id:int):
     return db.query(models.User).filter(models.User.id == user_id).first();
 
+def get_user_by_email(db:Session,email:str):
+    return db.query(models.User).filter(models.User.email == email).first();
 def get_user_by_login(user:schemas.UserCreate, db:Session):
     
     found_user = db.query(models.User).filter(models.User.email == user.email).first();
+   
     if (found_user and user.password == found_user.password):
-        return True;
+        return found_user;
     else:
-        return False;
+        return None;
 
 def create_assignment(assignment:schemas.AssignmentCreate,db:Session):
 
@@ -39,3 +46,8 @@ def get_user_token(db:Session, user_id:int):
     if (user):
         return user.canvas_token;
     return None;
+
+def get_all_assignments_by_user(user_id:int, db:Session):
+    return db.query(models.Assignment).filter(models.Assignment.user_id == user_id).all();
+
+

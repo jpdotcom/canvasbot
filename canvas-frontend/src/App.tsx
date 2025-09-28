@@ -4,10 +4,13 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import SignupPage from "./components/SignupPage";
 import Dashboard from "./components/Dashboard";
 function App() {
+ 
+  
   const routes =(<BrowserRouter>
       <Routes>
+      <Route path="/" element={<LoginPage />}/>
       <Route path="/SignUp" element={<SignupPage />} />
-      <Route path="dashboard" element={<Dashboard/>} />
+      <Route path="/dashboard" element={<Dashboard  />} />
     </Routes>
 
   </BrowserRouter>
@@ -16,12 +19,11 @@ function App() {
     
   return (<> 
     {routes}
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <LoginPage />
-    </div>
+
     </>
 
   );
 }
 
 export default App;
+

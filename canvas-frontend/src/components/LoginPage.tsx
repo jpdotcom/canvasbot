@@ -1,15 +1,21 @@
 // components/LoginPage.tsx
 import { useState, FormEvent } from 'react';
-
+import { useNavigate } from 'react-router-dom';
+interface Props{
+    name: string;
+    setName: React.Dispatch<React.SetStateAction<string>>;
+}
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
   const PORT=8000
+  const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(false);
-
+    //print to console to debug 
+    console.log("Testing");
     try {
         const response = await fetch(`http://localhost:8000/users/validate`, {
             method: 'POST',
@@ -26,8 +32,11 @@ export default function LoginPage() {
       if (response.ok) {
        setEmail("")
        setPassword("");
-       window.location.href = '/dashboard';
-      
+       const userData = await response.json();
+       
+       localStorage.setItem("name", userData.name);
+       localStorage.setItem("user_email", userData.email);
+       navigate('/dashboard');
       } else {
         setError(true);
       }
