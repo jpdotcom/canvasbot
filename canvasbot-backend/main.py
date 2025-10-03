@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import requests
-from routers import users,assignments
+from routers import users,assignments, llm
 from dotenv import load_dotenv 
 import os 
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,7 +14,7 @@ DATABASE_URL=os.getenv("DATABASE_URL")
 app=FastAPI()
 app.include_router(users.router);
 app.include_router(assignments.router)
-
+app.include_router(llm.router)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000"],  # React dev server

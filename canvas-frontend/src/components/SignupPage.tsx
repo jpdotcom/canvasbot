@@ -40,18 +40,12 @@ function SignupPage() {
       if (response.ok) {
         const userData = await response.json();
         //Check if user isn't None 
-        if (userData != null) {
-          const response2 = await fetch('http://localhost:8000/assignments/sync/' + userData.id, {
-            method: 'POST',
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-        }
+
         localStorage.setItem("user_email", userData.email);
         localStorage.setItem("name", userData.name);
+        
         setName(userData.name);
-        navigate('/dashboard');
+        navigate('/');
       } else {
         setError(true);
       }

@@ -9,11 +9,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const PORT=8000
   const navigate = useNavigate();
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError(false);
+    if (isSubmitting) return; // Prevent multiple submissions
+    setIsSubmitting(true);
     //print to console to debug 
     console.log("Testing");
     try {
@@ -33,9 +36,27 @@ export default function LoginPage() {
        setEmail("")
        setPassword("");
        const userData = await response.json();
-       
+      
        localStorage.setItem("name", userData.name);
        localStorage.setItem("user_email", userData.email);
+       localStorage.setItem("user_id", userData.id);
+       //Sync assignments
+        const response1 = await fetch('http://localhost:8000/assignments/sync/' + userData.id, {
+          method: 'POST',
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }); 
+        //fetch assignments
+        const response2 = await fetch('http://localhost:8000/assignments/all/' + userData.id);
+
+        //need local storage for assignments
+        const assignments = await response2.json();
+      
+        localStorage.setItem("assignments", JSON.stringify(assignments));
+       
+
+
        navigate('/dashboard');
       } else {
         setError(true);
@@ -87,7 +108,8 @@ export default function LoginPage() {
             </div>
           )}
 
-          <button type="submit" className="btn btn-primary w-100">Login</button>
+          {!isSubmitting && <button type="submit" className="btn btn-primary w-100" disabled={isSubmitting}>Login</button>}
+          {isSubmitting && <button type="submit" className="btn btn-primary w-100" disabled={isSubmitting}>Logging in</button>}
         </form>
 
         <div className="text-center mt-3">

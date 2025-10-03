@@ -25,10 +25,15 @@ def get_assignment(assignment_id: int, database: Session = Depends(db.get_db)):
 def get_assignments_by_user(user_id:int, database: Session = Depends(db.get_db)):
      
     assigments = crud.get_all_assignments_by_user(user_id=user_id,db=database); 
-    
+
     return assigments;
 @router.post("/sync/{user_id}")
 def sync(user_id:int,database:Session=Depends(db.get_db)):
+    #remove all assignments for user 
+    assignments = crud.get_all_assignments_by_user(user_id=user_id,db=database);
+    for assignment in assignments:
+        crud.remove_assignment(assignment_id=assignment.id,db=database);
+    
     canvas_api.sync_assignments(user_id=user_id,db=database);
     return;
 

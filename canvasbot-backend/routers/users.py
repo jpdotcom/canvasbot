@@ -11,7 +11,7 @@ def create_user(user:schemas.UserCreate,database:Session = Depends(db.get_db)):
     existing_user = crud.get_user_by_email(db=database,email=user.email);
     if existing_user:
         raise HTTPException(status_code=400,detail="Email already registered")
-        
+
     return crud.create_user(database,user) 
 
 

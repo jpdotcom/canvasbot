@@ -1,5 +1,5 @@
 # models.py
-from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, Text, DateTime, ForeignKey, JSON
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
@@ -20,3 +20,4 @@ class Assignment(Base):
     title = Column(String(200))
     description = Column(Text)
     due_date = Column(DateTime)
+    embedding = Column(JSON)  

@@ -1,6 +1,6 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Json
 from datetime import datetime
-
+from typing import Any, List
 class UserBase(BaseModel):
     email:str 
     password:str
@@ -26,7 +26,7 @@ class AssignmentBase(BaseModel):
 
 class AssignmentCreate(AssignmentBase):
     user_id : int
-
+    embedding : List[float]
 
 class AssignmentResponse(AssignmentBase):
 
@@ -36,3 +36,7 @@ class AssignmentResponse(AssignmentBase):
     class Config:
         orm_mode=True 
     
+class SemanticSearchRequest(BaseModel):
+    query: str
+    user_id: int
+    top_k: int = 3
