@@ -36,20 +36,27 @@ export default function LoginPage() {
        setEmail("")
        setPassword("");
        const userData = await response.json();
-      
+       localStorage.setItem("access_token", userData.access_token);
+       console.log(userData.access_token)
        localStorage.setItem("name", userData.name);
        localStorage.setItem("user_email", userData.email);
        localStorage.setItem("user_id", userData.id);
        //Sync assignments
-        const response1 = await fetch('http://localhost:8000/assignments/sync/' + userData.id, {
+        const response1 = await fetch('http://localhost:8000/assignments/sync', {
           method: 'POST',
           headers: {
+            "Authorization": `Bearer ${userData.access_token}`,
             "Content-Type": "application/json",
           },
         }); 
         //fetch assignments
-        const response2 = await fetch('http://localhost:8000/assignments/all/' + userData.id);
-
+        const response2 = await fetch('http://localhost:8000/assignments/all',{
+          headers: {
+            "Authorization": `Bearer ${userData.access_token}`,
+            
+          },
+        } );
+     
         //need local storage for assignments
         const assignments = await response2.json();
       

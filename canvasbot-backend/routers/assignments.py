@@ -6,13 +6,19 @@ import crud
 import canvas_api
 from dotenv import load_dotenv 
 import os 
+from utils.auth import verify_token
 router = APIRouter(prefix='/assignments', tags=["assignments"]) 
 
 
 @router.post("/",response_model=schemas.AssignmentResponse)
 def create_assignment(assignment:schemas.AssignmentCreate, database: Session = Depends(db.get_db)):
     return crud.create_assignment(assignment=assignment,db=database)
+@router.get("/all",response_model=list[schemas.AssignmentResponse]) 
+def get_assignments_by_user(user_id:int = Depends(verify_token), database: Session = Depends(db.get_db)):
+     
+    assigments = crud.get_all_assignments_by_user(user_id=user_id,db=database); 
 
+    return assigments;
 @router.get("/{assignment_id}",response_model=schemas.AssignmentResponse)
 def get_assignment(assignment_id: int, database: Session = Depends(db.get_db)):
     assignment = crud.get_assignment(assignment_id=assignment_id,db=database);
@@ -21,14 +27,9 @@ def get_assignment(assignment_id: int, database: Session = Depends(db.get_db)):
         return 
     return assignment;
 
-@router.get("/all/{user_id}",response_model=list[schemas.AssignmentResponse]) 
-def get_assignments_by_user(user_id:int, database: Session = Depends(db.get_db)):
-     
-    assigments = crud.get_all_assignments_by_user(user_id=user_id,db=database); 
 
-    return assigments;
-@router.post("/sync/{user_id}")
-def sync(user_id:int,database:Session=Depends(db.get_db)):
+@router.post("/sync")
+def sync(user_id:int = Depends(verify_token),database:Session=Depends(db.get_db)):
     #remove all assignments for user 
     assignments = crud.get_all_assignments_by_user(user_id=user_id,db=database);
     for assignment in assignments:
