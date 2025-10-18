@@ -10,6 +10,8 @@ from typing import List
 from utils.extract_search_query import *
 from  utils.cosine_similiarity import *
 from utils.embeddings import *
+from utils.answerQuery import *
+from utils.workload import *
 router = APIRouter(prefix='/llm', tags=["llm"])
 
 
@@ -55,3 +57,14 @@ def semantic_search(request: schemas.SemanticSearchRequest, database: Session = 
     similar_assignment_ids = [assignment.id for assignment, _ in top_similar]
     
     return similar_assignment_ids
+
+@router.post('/generate_response',response_model = str)
+def generate_response(prompt: schemas.LLMQuery):
+    return answerQuery(prompt);
+
+@router.get('/get_workload/{user_id}', response_model = str)    
+def generate_workload(user_id:int, database: Session = Depends(db.get_db)):
+    
+    assignments=crud.get_all_current_assignments_by_user(user_id, db=database)
+    
+    return getWorkload(assignments)

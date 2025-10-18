@@ -1,11 +1,41 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useState } from "react";
 function AIInsights(){
+
+  
+  const getInsight = async ()=>{
+    const response = await fetch("http://localhost:8000/llm/get_workload/"+localStorage.getItem("user_id"))
+    if (response.ok){
+      console.log("HELLo")
+      const insight = await response.json();
+      return insight
+    }
+
+    
+  }
+
+  const [insight,setInsights] = useState("");
+
+
+  useEffect(()=>{
+    const fetchInsights=async () =>{
+      try{
+        const value = await getInsight()
+        setInsights(value);
+      }
+      catch(error){
+        console.error("Error fetching: ", error);
+        setInsights("Failed To Get Insights");
+      }
+    }
+    fetchInsights();
+    
+  },[])
   return (
     <div className="border rounded p-3 bg-primary bg-opacity-10">
       <h5 className="fw-bold">AI Insights</h5>
       <p className="text-muted mb-0">
-        Based on your upcoming deadlines and estimated workload, prioritize the
-        Case Study Analysis and Marketing Presentation.
+        {insight}
       </p>
     </div>
   );

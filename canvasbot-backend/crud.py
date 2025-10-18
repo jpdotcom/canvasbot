@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session 
+from datetime import datetime
 import models,schemas 
 
 def create_user(db:Session, user:schemas.UserCreate):
@@ -55,3 +56,8 @@ def remove_assignment(assignment_id:int, db:Session):
         db.delete(assignment);
         db.commit();
     return
+
+
+def get_all_current_assignments_by_user(user_id:int,db:Session):
+
+    return db.query(models.Assignment).filter(models.Assignment.due_date>=datetime.now())

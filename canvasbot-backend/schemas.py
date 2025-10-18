@@ -40,3 +40,13 @@ class SemanticSearchRequest(BaseModel):
     query: str
     user_id: int
     top_k: int = 3
+
+
+class LLMQuery(BaseModel):
+    query: str 
+    assignment: AssignmentResponse
+
+    class Config:
+        orm_mode = True 
+    
+

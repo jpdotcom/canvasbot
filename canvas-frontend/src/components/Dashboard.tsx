@@ -30,9 +30,9 @@ function Dashboard() {
           <AIInsights />
         </div>
 
-        <aside className="d-none d-lg-flex">
+        {/* <aside className="d-none d-lg-flex">
           <AIAssistant />
-        </aside>
+        </aside> */}
       </main>
     </div>
   );

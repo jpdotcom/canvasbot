@@ -1,0 +1,25 @@
+#user-message {
+  background-color: hsl(211, 100%, 50%);
+  color: white;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  display: inline-block;
+  max-width: 90%;
+  
+  word-break: break-word; /* avoid overflow for long tokens */
+ 
+   
+
+  
+}
+
+#assistant-message {
+  background-color: #f8f9fa;
+  color: black;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  max-width: 90%;
+  align-self: flex-start;
+}
