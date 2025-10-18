@@ -6,7 +6,6 @@ function AIInsights(){
   const getInsight = async ()=>{
     const response = await fetch("http://localhost:8000/llm/get_workload/"+localStorage.getItem("user_id"))
     if (response.ok){
-      console.log("HELLo")
       const insight = await response.json();
       return insight
     }
@@ -34,7 +33,7 @@ function AIInsights(){
   return (
     <div className="border rounded p-3 bg-primary bg-opacity-10">
       <h5 className="fw-bold">AI Insights</h5>
-      <p className="text-muted mb-0">
+      <p className="text-muted mb-0" style={{ whiteSpace: 'pre-wrap' }}>
         {insight}
       </p>
     </div>
