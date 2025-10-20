@@ -17,49 +17,13 @@ app.include_router(assignments.router)
 app.include_router(llm.router)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # React dev server
+    allow_origins=[os.getenv("REACT_DEV_SERVER", "http://localhost:3000")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-
 @app.get("/")
 def read_root():
     return {"message":"CanvasBot Backend Started Up!"}
 
-def get_assignments(course_id):
-
-    url = f"{CANVAS_BASE_URL}/courses/{course_id}/assignments"
-
-    resp = requests.get(url,headers=headers);
-
-    return resp.json()
-
-def get_courses():
-
-    url = f"{CANVAS_BASE_URL}/courses?enrollment_state=active"
-
-
-    resp = requests.get(url,headers=headers)
-    return resp.json()
-
-@app.get("/testassignments/{course_id}")
-def assignment(course_id):
-    return get_assignments(course_id);
-
-@app.get("/courses")
-
-def courses():
-    return get_courses();
-
-@app.get("/assignments")
-
-def getAllAssignments():
-
-    courses = get_courses();
-    assignments=[]
-    for course in courses:
-
-        assignments += get_assignments(course['id'])
-    return assignments
