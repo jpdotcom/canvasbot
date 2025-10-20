@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
+import { API_URL } from "../config";
 function AIInsights(){
 
   
   const getInsight = async ()=>{
-    const response = await fetch("http://localhost:8000/llm/get_workload/"+localStorage.getItem("user_id"))
+    const response = await fetch(`${API_URL}/llm/get_workload/`+localStorage.getItem("user_id"))
+    
     if (response.ok){
       const insight = await response.json();
       return insight

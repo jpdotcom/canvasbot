@@ -1,5 +1,6 @@
 import React from "react";
 import "./Message.css";
+import { API_URL } from "../config";
 interface Message{
   from: 'user' | 'assistant';
   text: string;
@@ -22,7 +23,7 @@ function AIAssistant(){
      
     }
     console.log(localStorage.getItem("user_id"));
-    const response = await fetch('http://localhost:8000/llm/semantic_search/', {
+    const response = await fetch(`${API_URL}/llm/semantic_search/`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
@@ -47,7 +48,7 @@ function AIAssistant(){
       //   }
       //Get most likely assignment
       const assignment_id = data[0];
-      const response2 = await fetch('http://localhost:8000/assignments/' + assignment_id);
+      const response2 = await fetch(`${API_URL}/assignments/` + assignment_id);
       if (response2.ok){
         const assignment = await response2.json();
         const jsonQuery = JSON.stringify({

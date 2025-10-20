@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { FormEvent } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-
+import { API_URL } from "../config";
 interface Props {
   name: string;
   setName: React.Dispatch<React.SetStateAction<string>>;
@@ -24,7 +24,8 @@ function SignupPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('http://localhost:8000/users/', {
+      const response = await fetch(`${API_URL}/users/`, {
+      
         method: 'POST',
         headers: {
           "Content-Type": "application/json",

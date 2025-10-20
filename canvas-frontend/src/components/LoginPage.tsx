@@ -1,6 +1,7 @@
 // components/LoginPage.tsx
 import { useState, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { API_URL } from '../config';
 interface Props{
     name: string;
     setName: React.Dispatch<React.SetStateAction<string>>;
@@ -20,7 +21,8 @@ export default function LoginPage() {
     //print to console to debug 
     console.log("Testing");
     try {
-        const response = await fetch(`http://localhost:8000/users/validate`, {
+        const response = await fetch(`${API_URL}/users/validate`, {
+        
             method: 'POST',
             headers: {
               "Content-Type": "application/json",
@@ -42,7 +44,8 @@ export default function LoginPage() {
        localStorage.setItem("user_email", userData.email);
        localStorage.setItem("user_id", userData.id);
        //Sync assignments
-        const response1 = await fetch('http://localhost:8000/assignments/sync', {
+       const response1 = await fetch(`${API_URL}/assignments/sync`, {
+        
           method: 'POST',
           headers: {
             "Authorization": `Bearer ${userData.access_token}`,
@@ -50,7 +53,8 @@ export default function LoginPage() {
           },
         }); 
         //fetch assignments
-        const response2 = await fetch('http://localhost:8000/assignments/all',{
+        const response2= await fetch(`${API_URL}/assignments/all`,{
+       
           headers: {
             "Authorization": `Bearer ${userData.access_token}`,
             
