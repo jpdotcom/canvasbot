@@ -66,9 +66,11 @@ export default function LoginPage() {
 
        navigate('/dashboard');
       } else {
+        setIsSubmitting(false);
         setError(true);
       }
     } catch {
+      setIsSubmitting(false);
       setError(true);
     }
   };
@@ -78,7 +80,7 @@ export default function LoginPage() {
       <div className="card p-4 shadow-sm" style={{ maxWidth: '400px', width: '100%' }}>
         <div className="text-center mb-4">
           <h1 className="h3 mb-2">Canvas Bot</h1>
-          <p className="text-muted small">Login to manage your API tokens</p>
+          <p className="text-muted small">Login for a better Canvas!</p>
         </div>
 
         <form onSubmit={handleSubmit}>

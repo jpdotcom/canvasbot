@@ -46,12 +46,12 @@ def create_user(user: schemas.UserCreate, database: Session = Depends(db.get_db)
     
     return db_user
 
-@router.get("/{user_id}", response_model=schemas.UserResponse)
-def read_user(user_id: int, database: Session = Depends(db.get_db)):
-    user = crud.get_user(database, user_id)
-    if user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return user 
+# @router.get("/{user_id}", response_model=schemas.UserResponse)
+# def read_user(user_id: int, database: Session = Depends(db.get_db)):
+#     user = crud.get_user(database, user_id)
+#     if user is None:
+#         raise HTTPException(status_code=404, detail="User not found")
+#     return user 
 
 @router.post("/validate")
 def validate_user(user: schemas.UserBase, database: Session = Depends(db.get_db)):
@@ -62,12 +62,7 @@ def validate_user(user: schemas.UserBase, database: Session = Depends(db.get_db)
 
     raise HTTPException(status_code=404, detail="Email is incorrect or password is incorrect")
 
-@router.get("/by_email/{email}", response_model=schemas.UserResponse)
-def get_user_by_email(email: str, database: Session = Depends(db.get_db)):
-    user = crud.get_user_by_email(db=database, email=email)
-    if (user):
-        return user
-    raise HTTPException(status_code=404, detail="User not found")
+
 
 # New endpoint to manually update Canvas token
 @router.post("/canvas_token")
