@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-
+import "./UpcomingAssignments.css"
+import Assignment from "./Assignment";
 interface Assignment {
   title: string;
   description: string;
   due_date: string;
+  id: number
+  user_id: number 
+  course_name: string
 }
 
 function UpcomingAssignments() {
   
   const [showAll, setShowAll] = React.useState(false); // State to toggle showing all assignments
-  
+
   
 
   //Load in assignments from local storage
@@ -51,11 +55,15 @@ function UpcomingAssignments() {
       <h4 className="fw-bold mb-3">Upcoming Assignments</h4>
       <ul className="list-group">
         {visibleAssignments.map((a, idx) => (
-          <li key={idx} className="list-group-item">
-            <p className="fw-medium mb-1">{a.title}</p>
-            <p className="text-muted small mb-1">{a.description}</p>
-            <span className="text-primary small fw-bold">Due: {formatDate(a.due_date)}</span>
-          </li>
+            <Assignment 
+            idx={idx}
+            title={a.title}
+            description={a.description}
+            due_date={a.due_date}
+            user_id={a.user_id}
+            course_name={a.course_name}
+            id={a.id}
+          />
         ))}
       </ul>
       {/* Show All button */}

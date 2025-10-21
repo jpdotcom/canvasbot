@@ -19,13 +19,13 @@ def get_assignments_by_user(user_id:int = Depends(verify_token), database: Sessi
     assigments = crud.get_all_assignments_by_user(user_id=user_id,db=database); 
 
     return assigments;
-# @router.get("/{assignment_id}",response_model=schemas.AssignmentResponse)
-# def get_assignment(assignment_id: int, database: Session = Depends(db.get_db)):
-#     assignment = crud.get_assignment(assignment_id=assignment_id,db=database);
-#     if assignment is None: 
-#         raise HTTPException(status_code=404,detail="Assignment Not Found" )
-#         return 
-#     return assignment;
+@router.get("/{assignment_id}",response_model=schemas.AssignmentResponse)
+def get_assignment(assignment_id: int, database: Session = Depends(db.get_db)):
+    assignment = crud.get_assignment(assignment_id=assignment_id,db=database);
+    if assignment is None: 
+        raise HTTPException(status_code=404,detail="Assignment Not Found" )
+        return 
+    return assignment;
 
 
 @router.post("/sync")

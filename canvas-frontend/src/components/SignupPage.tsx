@@ -3,10 +3,7 @@ import { useState } from "react";
 import { FormEvent } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { API_URL } from "../config";
-interface Props {
-  name: string;
-  setName: React.Dispatch<React.SetStateAction<string>>;
-}
+
 
 function SignupPage() {
   const [email, setEmail] = useState('');
@@ -62,7 +59,7 @@ function SignupPage() {
       <div className="card p-4 shadow-sm" style={{ maxWidth: '400px', width: '100%' }}>
         <div className="text-center mb-4">
           <h1 className="h3 mb-2">Canvas Bot</h1>
-          <p className="text-muted small">Login to manage your API tokens</p>
+          <p className="text-muted small">Sign up for a better Canvas experience</p>
         </div>
 
         <form onSubmit={handleSignup}>

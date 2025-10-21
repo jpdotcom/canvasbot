@@ -44,12 +44,14 @@ export default function Header() {
     // Redirect to login page
     navigate('/');
   };
-
+  const goHome = () => {
+    navigate('/dashboard')
+  }
   return (
     <header className="bg-white shadow-sm">
       <div className="container-fluid">
         <div className="d-flex align-items-center justify-content-between py-3 px-4">
-          <div className="d-flex align-items-center gap-3">
+          <div className="d-flex align-items-center gap-3" onClick={goHome} style={{cursor:'pointer'}}>
             <h1 className="h4 mb-0 fw-bold text-primary">Canvas Bot</h1>
           </div>
 

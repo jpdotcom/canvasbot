@@ -63,7 +63,7 @@ export default function LoginPage() {
      
         //need local storage for assignments
         const assignments = await response2.json();
-      
+        console.log(JSON.stringify(assignments))
         localStorage.setItem("assignments", JSON.stringify(assignments));
        
 
